@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Add Task</title>
+</head>
+<body>
+    <h1>Add Task</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="title" placeholder="Task Title" required><br>
+        <textarea name="description" placeholder="Task Description"></textarea><br>
+        <input type="datetime-local" name="due_date"><br>
+        
+        <!-- Category Dropdown -->
+        <label for="category">Category:</label>
+        <select name="category" id="category">
+            <option value="work">Work</option>
+            <option value="personal">Personal</option>
+            <option value="shopping">Shopping</option>
+            <option value="other">Other</option>
+        </select><br>
+
+        <!-- Priority Dropdown -->
+        <label for="priority">Priority:</label>
+        <select name="priority" id="priority">
+            <option value="1">Low</option>
+            <option value="2">Medium</option>
+            <option value="3">High</option>
+        </select><br>
+
+        <button type="submit">Add Task</button>
+    </form>
+    <a href="{% url 'task_list' %}">Back to List</a>
+</body>
+</html>

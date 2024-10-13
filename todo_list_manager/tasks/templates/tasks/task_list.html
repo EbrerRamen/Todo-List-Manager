@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>To-Do List</title>
+</head>
+<body>
+    <h1>To-Do List</h1>
+
+    <!-- Navigation Links -->
+    <div class="nav-links">
+        <a href="{% url 'add_task' %}" class="btn">Add Task</a>
+        <a href="{% url 'task_list' %}" class="btn">Show all</a>
+        <a href="{% url 'task_list' %}?category=work" class="btn">Work</a>
+        <a href="{% url 'task_list' %}?category=personal" class="btn">Personal</a>
+        <a href="{% url 'task_list' %}?category=shopping" class="btn">Shopping</a>
+        <a href="{% url 'task_list' %}?category=other" class="btn">Other</a>
+    </div>
+
+    <!-- Task List -->
+    <ul>
+        {% for task in tasks %}
+            <li class="{% if task.completed %}completed{% endif %}">
+                <a href="{% url 'update_task' task.id %}">{{ task.title }}</a>
+                <span class="due-date">{{ task.due_date|date:"Y-m-d H:i" }}</span>
+                <span class="task-priority {% if task.priority == 1 %}priority-low{% elif task.priority == 2 %}priority-medium{% elif task.priority == 3 %}priority-high{% endif %}">
+                    {% if task.priority == 1 %}
+                        Low Priority
+                    {% elif task.priority == 2 %}
+                        Medium Priority
+                    {% elif task.priority == 3 %}
+                        High Priority
+                    {% endif %}
+                </span>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
